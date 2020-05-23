@@ -1,6 +1,6 @@
 ## remo.tv is an open telerobotics platform designed for controling and sharing control of robots online in real time.
 
-##EV3dev guide
+## EV3dev guide
 Install ev3dev on your ev3 and establish an SSH connection before proceeding.
 Guides for this are at [ev3dev.org](https://ev3dev.org)
 
