@@ -5,7 +5,7 @@ import robot_util
 import logging
 import re
 import update
-import motor2
+# import motor2
 
 log = logging.getLogger('RemoTV.extended_command')
 
@@ -280,13 +280,13 @@ def tts_handler(command, args):
                 log.info("Owner muted TTS")
                 robot_util.sendChatMessage("TTS muted")
                 tts.mute_tts()
-                motor2.mute_tts()
+                move_handler.mute_tts()
                 return
             elif command[1] == 'unmute':
                 log.info("Owner unmuted TTS")
                 robot_util.sendChatMessage("TTS unmuted")
                 tts.unmute_tts()
-                motor2.unmute_tts()
+                move_handler.unmute_tts()
                 return
             elif command[1] == 'vol':
                 if len(command) > 2:
@@ -314,8 +314,8 @@ def stationary_handler(command, args):
 
 def battery_handler(command, args):
     global battery
-    robot_util.sendChatMessage("{}%".format(motor2.get_battery()))
-    motor2.tts("Battery is {}%".format(motor2.get_battery()))
+    robot_util.sendChatMessage("{}%".format(move_handler.get_battery()))
+    move_handler.tts("Battery is {}%".format(move_handler.get_battery()))
 
 
 def test_messages(command, args):
