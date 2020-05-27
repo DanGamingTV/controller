@@ -5,6 +5,7 @@ import audio_util
 import logging
 import platform
 import time
+# import motor2
 
 
 log = logging.getLogger('RemoTV.tts')
@@ -33,10 +34,10 @@ def setup(robot_config):
     global hw_num
     global delay_tts
     global delay
-    global motor2
-    motor2 = importlib.import_module('motor2')
-    motor2.connection("tts.py")
-    log.debug("tts.py: motor2.get_battery = {}".format(motor2.get_battery()))
+    # global motor2
+    # motor2 = importlib.import_module('motor2')
+    # motor2.connection("tts.py")
+    # log.debug("tts.py: motor2.get_battery = {}".format(motor2.get_battery()))
     
     type = robot_config.get('tts', 'type')
     mute_anon = not robot_config.getboolean('tts', 'anon_tts')
@@ -111,6 +112,7 @@ def say(args):
         if not isinstance(args, dict):
             log.debug("message : %s", args)
             tts_module.say(args)
+            # motor2.tts(args)
         else:
             message = ""
             if args["type"] == "self":
@@ -135,8 +137,7 @@ def say(args):
                     log.info('message blocked for URL')
                     exit()
             if user not in banned: 
-                tts_module.say(message, args)
-                motor2.tts(args)
+                # motor2.tts(message)
  
 def mute_tts():
     global mute
