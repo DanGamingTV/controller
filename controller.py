@@ -1,5 +1,4 @@
 from __future__ import print_function
-import motor2
 
 # TODO move all defs to the top of the file, out of the way of the flow of execution.
 # TODO full python3 support will involve installing the adafruit drivers, not using the ones from the repo
@@ -239,8 +238,9 @@ def handle_message(ws, message):
        # handle_command(data)
 
     elif event == "MESSAGE_RECEIVED":
-        if data['type'] != "robot":
-            on_handle_chat_message(data)
+        if data['channel_id'] == networking.channel_id:
+            if data['type'] != "robot":
+               on_handle_chat_message(data)
 
     elif event == "ROBOT_VALIDATED":
         networking.handleConnectChatChannel(data["host"])
@@ -262,9 +262,8 @@ def handle_chat_message(args):
     try:
         if not message[0] == ".":
             tts.say(args)
-            #motor2.tts(message)
     except IndexError:
-        print("error lol")
+        exit()
         
 def handle_command(args):
         global handlingCommand
@@ -272,7 +271,8 @@ def handle_command(args):
 
         # catch move commands that happen before the controller has fully
         # loaded and set a move handler.
-        motor2.handle(args)
+        if move_handler == None:
+           return
 
         log.debug('got command : %s', args)
         move_handler(args)
@@ -398,4 +398,4 @@ if not test_mode:
     log.critical('RemoTV Controller Exiting')
 else:
     log.critical('RemoTV Controller Test Complete')
-#sys.exit()
+sys.exit()
