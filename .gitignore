@@ -38,7 +38,6 @@ pyvenv.cfg
 
 controller.conf
 hardware/hardware_custom.py
-tts/tts_custom.py
 chat_custom.py
 tts/secret.py
 video/video_custom.py

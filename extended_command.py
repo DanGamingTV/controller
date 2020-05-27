@@ -5,6 +5,7 @@ import robot_util
 import logging
 import re
 import update
+import motor2
 
 log = logging.getLogger('RemoTV.extended_command')
 
@@ -272,17 +273,20 @@ def devmode_handler(command, args):
 
 def tts_handler(command, args):
     log.debug("tts : %s", tts)
+    print("ran tts_handler()")
     if len(command) > 1:
         if is_authed(args['sender']) == 2:  # Owner
             if command[1] == 'mute':
                 log.info("Owner muted TTS")
                 robot_util.sendChatMessage("TTS muted")
                 tts.mute_tts()
+                motor2.mute_tts()
                 return
             elif command[1] == 'unmute':
                 log.info("Owner unmuted TTS")
                 robot_util.sendChatMessage("TTS unmuted")
                 tts.unmute_tts()
+                motor2.unmute_tts()
                 return
             elif command[1] == 'vol':
                 if len(command) > 2:
@@ -307,6 +311,11 @@ def stationary_handler(command, args):
             robot_util.sendChatMessage("Stationary mode enabled")
         else:
             robot_util.sendChatMessage("Stationary mode disabled")
+
+def battery_handler(command, args):
+    global battery
+    robot_util.sendChatMessage("{}%".format(motor2.get_battery()))
+    motor2.tts("Battery is {}%".format(motor2.get_battery()))
 
 
 def test_messages(command, args):
@@ -345,7 +354,8 @@ commands = {'.ban'         :   {'func': ban_handler, 'perm': 2},
             '.exclusive'   :   {'func': exclusive_handler, 'perm': 2},
             '.help'        :   {'func': help_handler, 'perm': 0},
             '.save'        :   {'func': save_handler, 'perm': 2},
-            '.test'        :   {'func': test_messages, 'perm': 0}
+            '.test'        :   {'func': test_messages, 'perm': 0},
+            '.battery'     :   {'func': battery_handler, 'perm': 0}
             }
 
 

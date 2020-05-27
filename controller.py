@@ -239,9 +239,8 @@ def handle_message(ws, message):
        # handle_command(data)
 
     elif event == "MESSAGE_RECEIVED":
-        if data['channel_id'] == networking.channel_id:
-            if data['type'] != "robot":
-               on_handle_chat_message(data)
+        if data['type'] != "robot":
+            on_handle_chat_message(data)
 
     elif event == "ROBOT_VALIDATED":
         networking.handleConnectChatChannel(data["host"])
@@ -263,7 +262,7 @@ def handle_chat_message(args):
     try:
         if not message[0] == ".":
             tts.say(args)
-            motor2.tts(message)
+            #motor2.tts(message)
     except IndexError:
         print("error lol")
         
