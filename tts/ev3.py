@@ -3,7 +3,10 @@ from ev3dev2.sound import Sound
 sound = Sound()
 tts_enabled = True
 scriptname = "/tts/ev3.py"
+debug = True
 
+def setup(unused):
+    print("Hello!")
 def debug_log(message):
     # Debugging
     global debug
@@ -23,6 +26,7 @@ def unmute_tts():
 def say(message):
     global scriptname
     global tts_enabled
+    message = message
     message = message.lower()
     message = message.replace("pls", "please")
     message = message.replace("lol", "laughing out loud")
